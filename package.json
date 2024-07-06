@@ -10,7 +10,9 @@
     "gen-types": "npx supabase gen types typescript --linked > src/types/supabase.ts"
   },
   "dependencies": {
+    "@expo/metro-runtime": "~3.2.1",
     "@react-native-async-storage/async-storage": "1.23.1",
+    "@react-native/typescript-config": "^0.74.85",
     "@rneui/themed": "^4.0.0-rc.8",
     "@supabase/supabase-js": "^2.44.2",
     "expo": "~51.0.18",

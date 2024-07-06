@@ -5,10 +5,12 @@ import { useEffect, useState } from 'react';
 import { supabase } from '../lib/supabase';
 import { Database } from '../types/supabase';
 
-//const polls = [{ id: 1 }, { id: 2 }, { id: 3 }];
+
+
+type Poll = Database["public"]["Tables"]["Poll"]["Row"];
 
 export default function HomeScreen() {
-    const [polls, setPolls] = useState<Database>([""]);
+    const [polls, setPolls] = useState<Poll[]>([]);
 
     useEffect(() => {
        const fetchPolls = async() =>{
@@ -22,9 +24,9 @@ export default function HomeScreen() {
             Alert.alert('Error', error.message); 
            }
            console.log(data);
-           setPolls(data);
+           setPolls(data as unknown as Poll[]);
         };
-        fetchPolls();
+        fetchPolls(); 
     },[]);
 
     return (
@@ -37,8 +39,11 @@ export default function HomeScreen() {
                 },
                 headerTintColor: 'white',
                 headerRight: () => (<Link href={'/polls/newPoll'}>
-                    <AntDesign name="plus" size={24} color="white" style={{ alignSelf: 'center' }} />
-                </Link>)
+                    <AntDesign name="plus" size={20} color="white" style={{ alignSelf: 'center' }} />
+                </Link>),
+                 headerLeft: () => (<Link href={'/profile'}>
+                    <AntDesign name="user" size={20} color="white" style={{ alignSelf: 'center' }} />
+                </Link>),
             }} />
             <FlatList
                 data={polls}
