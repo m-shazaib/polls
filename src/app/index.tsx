@@ -1,10 +1,32 @@
-import { Button, FlatList, Pressable, StyleSheet, Text, View } from 'react-native';
+import { Alert, Button, FlatList, Pressable, StyleSheet, Text, View } from 'react-native';
 import { Link, Stack } from 'expo-router';
 import { AntDesign } from '@expo/vector-icons';
+import { useEffect, useState } from 'react';
+import { supabase } from '../lib/supabase';
+import { Database } from '../types/supabase';
 
-const polls = [{ id: 1 }, { id: 2 }, { id: 3 }];
+//const polls = [{ id: 1 }, { id: 2 }, { id: 3 }];
 
 export default function HomeScreen() {
+    const [polls, setPolls] = useState<Database>([""]);
+
+    useEffect(() => {
+       const fetchPolls = async() =>{
+
+           console.log('fetching...');
+           
+           
+           let { data, error } = await supabase.from('Poll').select('*')
+
+           if(error){
+            Alert.alert('Error', error.message); 
+           }
+           console.log(data);
+           setPolls(data);
+        };
+        fetchPolls();
+    },[]);
+
     return (
         <>
             <Stack.Screen options={{
@@ -15,21 +37,20 @@ export default function HomeScreen() {
                 },
                 headerTintColor: 'white',
                 headerRight: () => (<Link href={'/polls/newPoll'}>
-                    <AntDesign name="plus" size={24} color="white" style={{alignSelf: 'center'}} />
-                    </Link>)
+                    <AntDesign name="plus" size={24} color="white" style={{ alignSelf: 'center' }} />
+                </Link>)
             }} />
             <FlatList
                 data={polls}
                 scrollEnabled
                 contentContainerStyle={styles.container}
-                renderItem={({item}) => (
-                    <Link href={`/polls/${item.id}`} style={styles.pollsContainer} >
+                renderItem={({ item }) => (
+                   
                         <Text style={styles.poll}>Example Poll Question</Text>
-                    </Link>
                 )}
             />
 
-     
+
         </>
 
     );
