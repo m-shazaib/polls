@@ -1,17 +1,12 @@
-import React from 'react'
-import { useAuth } from '../../provider/AuthProvider'
-import { Redirect, Slot } from 'expo-router'
+import { Redirect, Slot } from 'expo-router';
+import { useAuth } from '../..//provider/AuthProvider';
 
-type Props = {}
+export default function ProtectedLayout() {
+  const { isAuthenticated } = useAuth();
 
-const ProtectedLayout = (props: Props) => {
-  const {user} = useAuth();
+  if (!isAuthenticated) {
+    return <Redirect href="/login" />;
+  }
 
-    if(!user){
-        return <Redirect href='/login' />
-    }
-
-    return <Slot />
+  return <Slot />;
 }
-
-export default ProtectedLayout

@@ -11,7 +11,7 @@ const CreatePoll = (props: Props) => {
     const [question, setQuestion] = useState('');
     const [options, setOptions] = useState(['']);
     const [error, setError] = useState('');
-    const { user } = useAuth();
+    const { user, isAuthenticated } = useAuth();
 
 
     // useEffect(() => {
@@ -23,7 +23,7 @@ const CreatePoll = (props: Props) => {
     // }, [user]);
 
     const createPoll = async () => {
-        if(!user) {
+        if(!user || !isAuthenticated) {
             Alert.alert('Error', 'You must be logged in to create a poll');
             return;
         }
