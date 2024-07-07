@@ -24,7 +24,7 @@ export default function AuthProvider({ children }: PropsWithChildren) {
         setSession(session)
       })
     }, [])
-    return <AuthContext.Provider value={{session, user: session?.user ?? null}}>{children}</AuthContext.Provider>
+    return <AuthContext.Provider value={{session, user: session?.user}}>{children}</AuthContext.Provider>
 }
 
-export const useAuth = () => useContext(AuthContext);
+export const useAuth = () => useContext(AuthContext)
