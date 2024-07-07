@@ -1,22 +1,50 @@
-import { Button, Pressable, StyleSheet, Text, View } from 'react-native'
+import { ActivityIndicator, Alert, Button, Pressable, StyleSheet, Text, View } from 'react-native'
 import { Stack, useLocalSearchParams } from 'expo-router'
 import { Feather } from '@expo/vector-icons';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { Poll } from '../../lib/db';
+import { supabase } from '../../lib/supabase';
 
 type Props = {}
 
-const poll = {
-  question: "Bahria vs DHA, which one is better?",
-  options: ["Bahria", "DHA", "Neither"],
-}
 
 
 const details = (props: Props) => {
   const { id } = useLocalSearchParams<{ id: string }>();
-  const [selected, setSelected] = useState('Bahria');
+  const [poll, setPoll] = useState<Poll>(null);
+  const [selected, setSelected] = useState('');
+
+
+  
+  
+  useEffect(() => {
+    const fetchPolls = async () => {
+      
+      
+      console.log('fetching...');
+      
+      let { data: Poll, error } = await supabase
+        .from('Poll')
+        .select('*').eq('id', Number.parseInt(id ?? '')).single();
+      
+
+      
+      if (error) {
+          Alert.alert('Error', error.message);
+      }
+
+      setPoll(Poll as unknown as Poll);
+     
+  };
+  fetchPolls();
+}, []);
 
   const vote = () => {
     console.warn('Voted for', selected);
+  }
+
+  if(!poll){
+    return <ActivityIndicator />
   }
 
   return (
@@ -32,7 +60,7 @@ const details = (props: Props) => {
       <Text style={styles.question}>{poll.question}</Text>
       <View style={{ gap: 10 }}>
 
-        {poll.options.map((option) => (
+        {poll.option.map((option) => (
           <Pressable onPress={() => setSelected(option)} key={option} style={styles.optionContainer}>
             <Feather name={selected === option ? "check-circle" : "circle"}
               size={18}
