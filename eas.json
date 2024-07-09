@@ -4,19 +4,19 @@
       "developmentClient": true,
       "distribution": "internal",
       "android": {
-        "buildType": "app-bundle"
+        "image": "latest"
       }
     },
     "preview": {
       "distribution": "internal",
       "android": {
-        "buildType": "app-bundle"
+        "image": "latest"
       }
     },
     "production": {
       "distribution": "internal",
       "android": {
-        "buildType": "app-bundle"
+        "image": "latest"
       }
     }
   }
