@@ -6,14 +6,20 @@
     "development": {
       "developmentClient": true,
       "distribution": "internal",
-      "image": "ubuntu-18.04-android-30"
+      "env": {
+        "EAS_BUILD_IMAGE": "ubuntu-18.04-android-30"
+      }
     },
     "preview": {
       "distribution": "internal",
-      "image": "ubuntu-18.04-android-30"
+      "env": {
+        "EAS_BUILD_IMAGE": "ubuntu-18.04-android-30"
+      }
     },
     "production": {
-      "image": "ubuntu-18.04-android-30"
+      "env": {
+        "EAS_BUILD_IMAGE": "ubuntu-18.04-android-30"
+      }
     }
   },
   "submit": {
