@@ -24,7 +24,7 @@ const CreatePoll = (props: Props) => {
     // }, [user]);
 
     const createPoll = async () => {
-        if(!user || !isAuthenticated) {
+        if (!user || !isAuthenticated) {
             Alert.alert('Error', 'You must be logged in to create a poll', [{ text: 'OK' }]);
             return;
         }
@@ -42,7 +42,7 @@ const CreatePoll = (props: Props) => {
 
         const { data, error } = await supabase
             .from('Poll')
-            .insert([{ question, option: validOptions }]) 
+            .insert([{ question, option: validOptions }])
             .select();
 
         if (error) {
@@ -59,7 +59,7 @@ const CreatePoll = (props: Props) => {
                 title: 'Create Poll',
                 headerTitleAlign: 'center',
                 headerStyle: {
-                    backgroundColor: '#d4f0ea', 
+                    backgroundColor: '#d4f0ea',
                 },
                 headerTintColor: 'black',
                 headerTitleStyle: {
@@ -69,57 +69,59 @@ const CreatePoll = (props: Props) => {
             }} />
             <View style={styles.container}>
 
-            <Text style={styles.label}>Title</Text>
-            <TextInput
-                style={styles.input}
-                value={question}
-                onChangeText={setQuestion}
-                placeholder='Type your question here'
+                <Text style={styles.label}>Title</Text>
+                <TextInput
+                    style={styles.input}
+                    value={question}
+                    onChangeText={setQuestion}
+                    placeholder='Type your question here'
                 />
 
-            <Text style={styles.label}>Options</Text>
-            {options.map((option, index) => (
-                <View key={index} style={{ justifyContent: "center" }}>
-                    <TextInput
-                        style={styles.input}
-                        value={option}
-                        onChangeText={(text) => {
-                            const updated = [...options];
-                            updated[index] = text;
-                            setOptions(updated);
-                        }}
-                        placeholder={`Option ${index + 1}`}
+                <Text style={styles.label}>Options</Text>
+                {options.map((option, index) => (
+                    <View key={index} style={{ justifyContent: "center" }}>
+                        <TextInput
+                            style={styles.input}
+                            value={option}
+                            onChangeText={(text) => {
+                                const updated = [...options];
+                                updated[index] = text;
+                                setOptions(updated);
+                            }}
+                            placeholder={`Option ${index + 1}`}
                         />
-                    <Entypo
-                        style={{
-                            position: "absolute",
-                            right: 10,
-                            zIndex: 1,
-                        }}
-                        name="cross"
-                        size={24}
-                        color="black"
-                        onPress={() => {
-                            const updated = [...options];
-                            updated.splice(index, 1);
-                            setOptions(updated);
-                        }}
+                        <Entypo
+                            style={{
+                                position: "absolute",
+                                right: 10,
+                                zIndex: 1,
+                            }}
+                            name="cross"
+                            size={24}
+                            color="black"
+                            onPress={() => {
+                                const updated = [...options];
+                                updated.splice(index, 1);
+                                setOptions(updated);
+                            }}
                         />
-                </View>
-            ))}
+                    </View>
+                ))}
             </View>
-            <View style={{gap: 15, padding: 10}}>
+            <View style={{ gap: 15, padding: 10 }}>
 
-            <Pressable style={styles.button} onPress={() => setOptions([...options, ''])}>
-                <Text style={{ fontFamily: 'Ubuntu-Bold', color: '#ffffff', textAlign: 'center' }}>Add Option</Text>
-            </Pressable>
+                <Pressable style={styles.button} onPress={() => setOptions([...options, ''])}>
+                    <Text style={{ fontFamily: 'Ubuntu-Bold', color: '#ffffff', textAlign: 'center' }}>Add Option</Text>
+                </Pressable>
 
-            <Pressable  style={styles.button} onPress={createPoll}>
-                <Text style={{ fontFamily: 'Ubuntu-Bold', color: '#ffffff', textAlign: 'center' }}>Create Poll</Text>
+                <Pressable style={styles.button} onPress={createPoll}>
+                    <Text style={{ fontFamily: 'Ubuntu-Bold', color: '#ffffff', textAlign: 'center' }}>Create Poll</Text>
                 </Pressable>
             </View>
-            <Text style={{ color: 'red', fontFamily: 'Ubuntu-Medium', fontSize:18, paddingHorizontal: 15 }}>{error}</Text>
-            </LinearGradient>
+            <View style={{ backgroundColor: '#ff666e' }}>
+                <Text style={{ color: 'red', fontFamily: 'Ubuntu-Medium', fontSize: 18, paddingHorizontal: 15 }}>{error}</Text>
+            </View>
+        </LinearGradient>
     )
 }
 
