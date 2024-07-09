@@ -118,9 +118,9 @@ const CreatePoll = (props: Props) => {
                     <Text style={{ fontFamily: 'Ubuntu-Bold', color: '#ffffff', textAlign: 'center' }}>Create Poll</Text>
                 </Pressable>
             </View>
-            <View style={{ backgroundColor: '#ff666e' }}>
+           {error && <View style={{ backgroundColor: '#ff666e' }}>
                 <Text style={{ color: 'red', fontFamily: 'Ubuntu-Medium', fontSize: 18, paddingHorizontal: 15 }}>{error}</Text>
-            </View>
+            </View>}
         </LinearGradient>
     )
 }
