@@ -3,14 +3,14 @@
     "development": {
       "developmentClient": true,
       "distribution": "internal",
-      "image": "default"
+      "image": "latest"
     },
     "preview": {
       "distribution": "internal",
-      "image": "default"
+      "image": "latest"
     },
     "production": {
-      "image": "default"
+      "image": "latest"
     }
   }
 }
