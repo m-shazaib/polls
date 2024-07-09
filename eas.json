@@ -3,14 +3,21 @@
     "development": {
       "developmentClient": true,
       "distribution": "internal",
-      "image": "latest"
+      "android": {
+        "buildType": "app-bundle"
+      }
     },
     "preview": {
       "distribution": "internal",
-      "image": "latest"
+      "android": {
+        "buildType": "app-bundle"
+      }
     },
     "production": {
-      "image": "latest"
+      "distribution": "internal",
+      "android": {
+        "buildType": "app-bundle"
+      }
     }
   }
 }
