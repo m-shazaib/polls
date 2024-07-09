@@ -8,13 +8,13 @@ import {
 import { supabase } from '../lib/supabase';
 import { Session, User } from '@supabase/supabase-js';
 
-type AuthContext = {
+type AuthContextType = {
   session: Session | null;
   user: User | null;
   isAuthenticated: boolean;
 };
 
-const AuthContext = createContext<AuthContext>({
+const AuthContext = createContext<AuthContextType>({
   session: null,
   user: null,
   isAuthenticated: false,

@@ -2,7 +2,7 @@
   "expo": {
     "name": "polls",
     "slug": "polls",
-    "scheme": "polls-to-poll",    
+    "scheme": "polls-to-poll",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -25,7 +25,8 @@
       "favicon": "./assets/favicon.png"
     },
     "plugins": [
-      "expo-router"
+      "expo-router",
+      "expo-font"
     ]
   }
 }

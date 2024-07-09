@@ -1,9 +1,10 @@
-import { Alert, Button, StyleSheet, Text, TextInput, View } from 'react-native'
+import { Alert, Button, Pressable, StyleSheet, Text, TextInput, View } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { Entypo } from '@expo/vector-icons';
 import { router, Stack } from 'expo-router'
 import { useAuth } from '../../provider/AuthProvider';
 import { supabase } from '../../lib/supabase';
+import { LinearGradient } from 'expo-linear-gradient';
 
 type Props = {}
 
@@ -24,7 +25,7 @@ const CreatePoll = (props: Props) => {
 
     const createPoll = async () => {
         if(!user || !isAuthenticated) {
-            Alert.alert('Error', 'You must be logged in to create a poll');
+            Alert.alert('Error', 'You must be logged in to create a poll', [{ text: 'OK' }]);
             return;
         }
         if (!question) {
@@ -53,22 +54,28 @@ const CreatePoll = (props: Props) => {
     };
 
     return (
-        <View style={styles.container}>
+        <LinearGradient style={{ flex: 1 }} colors={['#edfcf7', '#f6fcfa']}>
             <Stack.Screen options={{
                 title: 'Create Poll',
                 headerTitleAlign: 'center',
                 headerStyle: {
-                    backgroundColor: '#00134F',
+                    backgroundColor: '#d4f0ea', 
                 },
-                headerTintColor: 'white',
+                headerTintColor: 'black',
+                headerTitleStyle: {
+                    fontFamily: 'Ubuntu-Bold',
+                    fontSize: 20,
+                },
             }} />
+            <View style={styles.container}>
+
             <Text style={styles.label}>Title</Text>
             <TextInput
                 style={styles.input}
                 value={question}
                 onChangeText={setQuestion}
                 placeholder='Type your question here'
-            />
+                />
 
             <Text style={styles.label}>Options</Text>
             {options.map((option, index) => (
@@ -82,11 +89,12 @@ const CreatePoll = (props: Props) => {
                             setOptions(updated);
                         }}
                         placeholder={`Option ${index + 1}`}
-                    />
+                        />
                     <Entypo
                         style={{
                             position: "absolute",
-                            right: 10
+                            right: 10,
+                            zIndex: 1,
                         }}
                         name="cross"
                         size={24}
@@ -96,14 +104,22 @@ const CreatePoll = (props: Props) => {
                             updated.splice(index, 1);
                             setOptions(updated);
                         }}
-                    />
+                        />
                 </View>
             ))}
+            </View>
+            <View style={{gap: 15, padding: 10}}>
 
-            <Button title='Add Option' onPress={() => setOptions([...options, ''])} />
-            <Button title='Create Poll' onPress={createPoll} />
-            <Text style={{ color: 'red' }}>{error}</Text>
-        </View>
+            <Pressable style={styles.button} onPress={() => setOptions([...options, ''])}>
+                <Text style={{ fontFamily: 'Ubuntu-Bold', color: '#ffffff', textAlign: 'center' }}>Add Option</Text>
+            </Pressable>
+
+            <Pressable  style={styles.button} onPress={createPoll}>
+                <Text style={{ fontFamily: 'Ubuntu-Bold', color: '#ffffff', textAlign: 'center' }}>Create Poll</Text>
+                </Pressable>
+            </View>
+            <Text style={{ color: 'red', fontFamily: 'Ubuntu-Medium', fontSize:18, paddingHorizontal: 15 }}>{error}</Text>
+            </LinearGradient>
     )
 }
 
@@ -115,13 +131,25 @@ const styles = StyleSheet.create({
         gap: 10,
     },
     label: {
-        fontSize: 20,
-        fontWeight: '500',
-        marginTop: 10,
+        fontSize: 18,
+        fontFamily: 'Ubuntu-Bold',
+        paddingHorizontal: 5,
+        paddingTop: 10,
     },
     input: {
-        backgroundColor: '#f0f0f0',
+        backgroundColor: '#d4f0f5',
         padding: 10,
         borderRadius: 5,
+        borderColor: '#00134F',
+        borderWidth: 1.5,
+        fontFamily: 'Ubuntu-Regular',
+        fontSize: 15,
+        elevation: 5,
+    },
+    button: {
+        backgroundColor: '#018754',
+        padding: 10,
+        borderRadius: 5,
+        elevation: 5,
     },
 })
