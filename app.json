@@ -5,10 +5,10 @@
     "scheme": "polls-to-poll",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.avif",
+    "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/icon.avif",
+      "image": "./assets/icon.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -17,13 +17,13 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/icon.avif",
+        "foregroundImage": "./assets/icon.png",
         "backgroundColor": "#ffffff"
       },
       "package": "com.mshazaib.polls"
     },
     "web": {
-      "favicon": "./assets/icon.avif"
+      "favicon": "./assets/icon.png"
     },
     "plugins": [
       "expo-router",
