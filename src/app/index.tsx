@@ -21,12 +21,12 @@ export default function HomeScreen() {
 
     useEffect(() => {
         const fetchPolls = async () => {
-            console.log('fetching...');
+            
             let { data, error } = await supabase.from('Poll').select('*');
             if (error) {
                 Alert.alert('Error', error.message);
             } else {
-                console.log(data);
+               
                 setPolls(data as unknown as Poll[]);
             }
             setLoading(false);
