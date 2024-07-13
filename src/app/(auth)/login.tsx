@@ -2,6 +2,8 @@ import React, { useState } from 'react'
 import { Alert, StyleSheet, View, AppState, Button, TextInput, Text, Pressable } from 'react-native'
 import { supabase } from '../../lib/supabase'
 import { LinearGradient } from 'expo-linear-gradient'
+import { enableScreens } from "react-native-screens";
+enableScreens();
 
 // Tells Supabase Auth to continuously refresh the session automatically if
 // the app is in the foreground. When this is added, you will continue to receive

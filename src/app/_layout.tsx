@@ -1,3 +1,5 @@
+import { enableScreens } from "react-native-screens";
+enableScreens();
 import { Link, Stack } from "expo-router";
 import AuthProvider from "../provider/AuthProvider";
 import { AntDesign } from "@expo/vector-icons";

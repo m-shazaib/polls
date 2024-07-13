@@ -1,3 +1,5 @@
+import { enableScreens } from "react-native-screens";
+enableScreens();
 import { Redirect, Slot } from 'expo-router';
 import { useAuth } from '../../provider/AuthProvider';
 

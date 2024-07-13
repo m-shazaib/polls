@@ -7,6 +7,8 @@ import { Redirect, Stack } from 'expo-router'
 import { LinearGradient } from 'expo-linear-gradient'
 import { Feather } from '@expo/vector-icons'
 import * as Clipboard from 'expo-clipboard';
+import { enableScreens } from "react-native-screens";
+enableScreens();
 
 
 type Props = {}
