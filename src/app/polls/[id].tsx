@@ -1,7 +1,6 @@
 import {
   ActivityIndicator,
   Alert,
-  Button,
   Pressable,
   StyleSheet,
   Text,
@@ -19,7 +18,7 @@ import { useFonts } from "expo-font";
 
 type Props = {};
 
-const details = (props: Props) => {
+const Details = (props: Props) => {
   const { id } = useLocalSearchParams<{ id: string }>();
   const [poll, setPoll] = useState<Poll>(null);
   const [selected, setSelected] = useState("");
@@ -40,7 +39,7 @@ const details = (props: Props) => {
 
   useEffect(() => {
     const fetchPolls = async () => {
-      let { data: Poll, error } = await supabase
+      let { data: pollData, error } = await supabase
         .from("Poll")
         .select("*")
         .eq("id", Number.parseInt(id ?? ""))
@@ -48,16 +47,17 @@ const details = (props: Props) => {
 
       if (error) {
         Alert.alert("Error", error.message);
+      } else {
+        setPoll(pollData as unknown as Poll);
+        fetchVote(pollData.id);
       }
-
-      setPoll(Poll as unknown as Poll);
     };
 
-    const fetchVote = async () => {
+    const fetchVote = async (pollId: number) => {
       let { data, error } = await supabase
         .from("vote")
         .select("option")
-        .eq("poll_id", poll.id)
+        .eq("poll_id", pollId)
         .eq("user_id", user?.id)
         .select();
 
@@ -66,15 +66,16 @@ const details = (props: Props) => {
       }
 
       if (data && data.length > 0) {
-        setUserVote(data.option);
+        setUserVote(data[0]);
       }
     };
 
     fetchPolls();
-    fetchVote();
-  }, []);
+  }, [id, user?.id]);
 
   const vote = async () => {
+    if (!poll) return;
+
     const newVote = {
       option: selected,
       poll_id: poll.id,
@@ -96,6 +97,7 @@ const details = (props: Props) => {
       Alert.alert("Thank you for your vote");
     }
   };
+
   return (
     <LinearGradient style={{ flex: 1 }} colors={["#edfcf7", "#f6fcfa"]}>
       <Stack.Screen
@@ -118,12 +120,6 @@ const details = (props: Props) => {
           <Text style={styles.question}>{poll.question}</Text>
           <View style={{ gap: 10 }}>
             {poll.option.map((option) => (
-              // <Pressable onPress={() => setSelected(option)} key={option} style={styles.optionContainer}>
-              //   <Feather name={selected === option ? "check-circle" : "circle"}
-              //     size={18}
-              //     color={selected === option ? "green" : "black"} />
-              //   <Text style={styles.option}>{option}</Text>
-              // </Pressable>
               <Option
                 key={option}
                 name={selected === option ? "check-circle" : "circle"}
@@ -150,7 +146,7 @@ const details = (props: Props) => {
   );
 };
 
-export default details;
+export default Details;
 
 const styles = StyleSheet.create({
   container: {
