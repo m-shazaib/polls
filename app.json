@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "polls",
+    "name": "Polls",
     "slug": "polls",
     "scheme": "polls-to-poll",
     "version": "1.0.0",
@@ -10,7 +10,7 @@
     "splash": {
       "image": "./assets/icon.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#d4f0ea"
     },
     "ios": {
       "supportsTablet": true
@@ -18,7 +18,7 @@
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/icon.png",
-        "backgroundColor": "#ffffff"
+        "backgroundColor": "#d4f0ea"
       },
       "package": "com.mshazaib.polls"
     },

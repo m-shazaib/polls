@@ -7,18 +7,21 @@ import {
 } from "react-native";
 import { Link, Stack } from "expo-router";
 import { AntDesign } from "@expo/vector-icons";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { supabase } from "../lib/supabase";
 import { Poll } from "../lib/db";
 import PollField from "../components/pollField";
 import { LinearGradient } from "expo-linear-gradient";
 import { useFonts } from "expo-font";
 import { enableScreens } from "react-native-screens";
+import { useIsFocused } from "@react-navigation/native";
 enableScreens();
 
 export default function HomeScreen() {
   const [polls, setPolls] = useState<Poll[]>([]);
   const [loading, setLoading] = useState(true);
+  const [refreshing, setRefreshing] = useState(false);
+  const isFocused = useIsFocused();
 
   const [fontsLoaded, fontError] = useFonts({
     "Ubuntu-Regular": require("../../assets/fonts/Ubuntu-Regular.ttf"),
@@ -27,18 +30,27 @@ export default function HomeScreen() {
     "Ubuntu-Medium": require("../../assets/fonts/Ubuntu-Medium.ttf"),
   });
 
-  useEffect(() => {
-    const fetchPolls = async () => {
-      let { data, error } = await supabase.from("Poll").select("*");
-      if (error) {
-        Alert.alert("Error", error.message);
-      } else {
-        setPolls(data as unknown as Poll[]);
-      }
-      setLoading(false);
-    };
-    fetchPolls();
+  const fetchPolls = useCallback(async () => {
+    setLoading(true);
+    let { data, error } = await supabase.from("Poll").select("*");
+    if (error) {
+      Alert.alert("Error", error.message);
+    } else {
+      setPolls(data as unknown as Poll[]);
+    }
+    setLoading(false);
   }, []);
+
+  useEffect(() => {
+    if (isFocused) {
+      fetchPolls();
+    }
+  }, [isFocused, fetchPolls]);
+
+  const onRefresh = useCallback(() => {
+    setRefreshing(true);
+    fetchPolls().finally(() => setRefreshing(false));
+  }, [fetchPolls]);
 
   if (!fontsLoaded) {
     return (
@@ -98,6 +110,8 @@ export default function HomeScreen() {
           renderItem={({ item }) => (
             <PollField question={item.question} href={`/polls/${item.id}`} />
           )}
+          refreshing={refreshing}
+          onRefresh={onRefresh}
         />
       )}
     </LinearGradient>
